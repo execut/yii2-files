@@ -19,7 +19,12 @@ class Attacher extends Migration
                 continue;
             }
 
-            $isAttached = $this->db->getTableSchema($table)->getColumn('files_file_id');
+            $tableSchema = $this->db->getTableSchema($table);
+            if (!$tableSchema) {
+                continue;
+            }
+
+            $isAttached = $tableSchema->getColumn('files_file_id');
             if (!$isAttached) {
                 $i->table($table)->addForeignColumn('files_files');
             }
