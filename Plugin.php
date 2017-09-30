@@ -9,4 +9,5 @@ interface Plugin
 {
     public function getFileFieldsPlugins();
     public function getAttachedModels();
+    public function getDataColumns();
 }

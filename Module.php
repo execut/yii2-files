@@ -26,4 +26,8 @@ class Module extends \yii\base\Module implements Plugin
     public function getAttachedModels() {
         return $this->getPluginsResults(__FUNCTION__);
     }
+
+    public function getDataColumns() {
+        return $this->getPluginsResults(__FUNCTION__);
+    }
 }

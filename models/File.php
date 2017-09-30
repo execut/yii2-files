@@ -9,6 +9,7 @@ use execut\crudFields\Behavior;
 use execut\crudFields\BehaviorStub;
 use execut\crudFields\fields\File as FileField;
 use execut\crudFields\ModelsHelperTrait;
+use execut\files\models\queries\FileQuery;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -20,6 +21,17 @@ class File extends ActiveRecord
     const MODEL_NAME = '{n,plural,=0{Files} =1{File} other{Files}}';
     use BehaviorStub, ModelsHelperTrait;
     public $dataFile = null;
+
+    public static function find()
+    {
+        return new FileQuery(self::class);
+    }
+
+    public static function getDataColumns() {
+        $columns = ArrayHelper::merge(['data'], \yii::$app->getModule('files')->getDataColumns());
+        return $columns;
+    }
+
     public function behaviors()
     {
         return ArrayHelper::merge(
