@@ -85,4 +85,8 @@ class File extends ActiveRecord
     public static function tableName() {
         return 'files_files';
     }
+
+    public function getFullName() {
+        return $this->alias . '.' . $this->extension . ' (' . $this->name . ')';
+    }
 }
