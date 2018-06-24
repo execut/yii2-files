@@ -15,6 +15,7 @@ class Plugin extends \execut\crudFields\Plugin
                 'class' => HasOneSelect2::class,
                 'attribute' => 'files_file_id',
                 'relation' => 'filesFile',
+                'nameParam' => 'name',
                 'nameAttribute' => 'fullName',
                 'url' => [
                     '/files/backend'
