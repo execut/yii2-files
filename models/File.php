@@ -112,4 +112,8 @@ class File extends ActiveRecord
     {
         return '#' . $this->id;
     }
+
+    public function getFullName() {
+        return $this->alias . '.' . $this->extension . ' (' . $this->name . ')';
+    }
 }
