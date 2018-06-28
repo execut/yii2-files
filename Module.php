@@ -6,9 +6,20 @@ namespace execut\files;
 
 
 use execut\dependencies\PluginBehavior;
+use yii\helpers\ArrayHelper;
 
 class Module extends \yii\base\Module implements Plugin
 {
+    public $tableName = 'files_files';
+    public $columns = [];
+    public $adminRole = '@';
+    protected const DEFAULT_COLUMNS = [
+        'extension' => 'extension',
+        'name' => 'name',
+        'data' => 'data',
+        'mime_type' => 'mime_type',
+        'file_md5' => 'file_md5',
+    ];
     public function behaviors()
     {
         return [
@@ -20,7 +31,13 @@ class Module extends \yii\base\Module implements Plugin
     }
 
     public function getFileFieldsPlugins() {
-        return $this->getPluginsResults(__FUNCTION__);
+
+        $pluginsResults = $this->getPluginsResults(__FUNCTION__);
+        if (!$pluginsResults) {
+            return [];
+        }
+
+        return $pluginsResults;
     }
 
     public function getAttachedModels() {
@@ -28,6 +45,23 @@ class Module extends \yii\base\Module implements Plugin
     }
 
     public function getDataColumns() {
-        return $this->getPluginsResults(__FUNCTION__);
+        $columns = $this->getPluginsResults(__FUNCTION__);
+        if (empty($columns)) {
+            return [];
+        }
+
+        return $columns;
+    }
+
+    public function getColumnName($column) {
+        return $this->getColumnsNames()[$column];
+    }
+
+    /**
+     * @return array
+     */
+    public function getColumnsNames(): array
+    {
+        return ArrayHelper::merge(self::DEFAULT_COLUMNS, $this->columns);
     }
 }

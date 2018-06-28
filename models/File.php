@@ -24,7 +24,17 @@ class File extends ActiveRecord
 
     public static function find()
     {
-        return new FileQuery(self::class);
+        $names = self::getDb()->getTableSchema(self::tableName())->getColumnNames();
+        $dataColums = self::getDataColumns();
+        foreach ($names as $key => $column) {
+            if (in_array($column, $dataColums)) {
+                unset($names[$key]);
+            }
+        }
+
+        $names = array_filter($names);
+
+        return (new FileQuery(self::class))->select($names);
     }
 
     public static function getDataColumns() {
@@ -46,13 +56,20 @@ class File extends ActiveRecord
                 'fields' => [
                     'class' => Behavior::class,
                     'plugins' => \yii::$app->getModule('files')->getFileFieldsPlugins(),
-                    'fields' => $this->getStandardFields(null, [
-                        'name' => [
+                    'module' => 'files',
+                    'fields' => $this->getStandardFields(['visible'], [
+                        \yii::$app->getModule('files')->getColumnName('name') => [
                             'displayOnly' => true,
                             'required' => false,
                         ],
-                        'data' => [
+                        \yii::$app->getModule('files')->getColumnName('data') => [
                             'class' => FileField::class,
+                            'required' => true,
+                            'fileNameAttribute' => \yii::$app->getModule('files')->getColumnName('name'),
+                            'fileExtensionAttribute' => \yii::$app->getModule('files')->getColumnName('extension'),
+                            'fileMimeTypeAttribute' => \yii::$app->getModule('files')->getColumnName('mime_type'),
+                            'dataAttribute' => \yii::$app->getModule('files')->getColumnName('data'),
+                            'md5Attribute' => \yii::$app->getModule('files')->getColumnName('file_md5'),
                         ],
 //                        [
 //                            'class' => HasOneSelect2::class,
@@ -62,6 +79,11 @@ class File extends ActiveRecord
 //                                '/pages/backend'
 //                            ],
 //                        ],
+                        'actions' => [
+                            'column' => [
+                                'controller' => '/files/backend',
+                            ]
+                        ],
                     ])
                 ],
                 [
@@ -78,11 +100,16 @@ class File extends ActiveRecord
     public function rules()
     {
         return ArrayHelper::merge($this->getBehavior('fields')->rules(), [
-//            ['file_md5', 'default', 'value' => new Expression()],
+            ['file_md5', 'unique'],
         ]);
     }
 
     public static function tableName() {
-        return 'files_files';
+        return \yii::$app->getModule('files')->tableName;
+    }
+
+    public function __toString()
+    {
+        return '#' . $this->id;
     }
 }

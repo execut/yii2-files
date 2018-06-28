@@ -38,7 +38,10 @@ class Backend extends Common
     public function initI18n() {
         \yii::$app->i18n->translations['execut/files'] = [
             'class' => PhpMessageSource::class,
-            'basePath' => '@vendor/execut/files/messages',
+            'basePath' => '@vendor/execut/yii2-files/messages',
+            'fileMap' => [
+                'execut/files' => 'files.php',
+            ],
         ];
     }
 

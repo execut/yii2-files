@@ -21,7 +21,7 @@ class BackendController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => [\yii::$app->getModule('files')->adminRole],
                     ],
                 ],
             ],
@@ -40,7 +40,7 @@ class BackendController extends Controller
             'update' => [
                 'adapter' => [
                     'filesAttributes' => [
-                        'data' => 'dataFile'
+                        \yii::$app->getModule('files')->getColumnName('data') => 'dataFile'
                     ],
                 ]
             ],
