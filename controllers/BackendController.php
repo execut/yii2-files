@@ -22,7 +22,7 @@ class BackendController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => [\yii::$app->getModule('files')->adminRole],
+                        'roles' => [$this->module->adminRole],
                     ],
                 ],
             ],
@@ -31,17 +31,18 @@ class BackendController extends Controller
 
     public function actions()
     {
+        $modelClass = $this->module->modelClass;
         $crud = new Crud([
-            'modelClass' => FileBackend::class,
-            'module' => 'files',
+            'modelClass' => $modelClass,
+            'module' => $this->module->id,
             'moduleName' => 'Files',
-            'modelName' => FileBackend::MODEL_NAME,
+            'modelName' => $modelClass::MODEL_NAME,
         ]);
         return ArrayHelper::merge($crud->actions(), [
             'update' => [
                 'adapter' => [
                     'filesAttributes' => [
-                        \yii::$app->getModule('files')->getColumnName('data') => 'dataFile'
+                        $this->module->getColumnName('data') => 'dataFile'
                     ],
                 ]
             ],

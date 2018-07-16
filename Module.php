@@ -13,6 +13,7 @@ class Module extends \yii\base\Module implements Plugin
     public $tableName = 'files_files';
     public $columns = [];
     public $adminRole = '@';
+    public $modelClass = models\File::class;
     protected const DEFAULT_COLUMNS = [
         'extension' => 'extension',
         'name' => 'name',

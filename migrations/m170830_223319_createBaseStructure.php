@@ -7,6 +7,10 @@ class m170830_223319_createBaseStructure extends Migration
 {
     public function initInverter(Inverter $i)
     {
+        if (\yii::$app->getModule('files')->tableName !== 'files_files') {
+            return;
+        }
+
         $i->table('files_files')
             ->create($this->defaultColumns([
                 'name' => $this->string()->notNull(),

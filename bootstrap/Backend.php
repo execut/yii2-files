@@ -50,7 +50,7 @@ class Backend extends Common
      */
     protected function bootstrapNavigation($app)
     {
-        if ($app->user->isGuest || !$app->user->can($app->getModule('files')->adminRole)) {
+        if ($app->user->isGuest || !$app->user->can($app->getModule($this->moduleId)->adminRole)) {
             return;
         }
 
@@ -58,11 +58,12 @@ class Backend extends Common
          * @var Component $navigation
          */
         $navigation = $app->navigation;
+        $modelClass = $app->getModule($this->moduleId)->modelClass;
         $navigation->addConfigurator([
             'class' => Configurator::class,
-            'module' => 'files',
+            'module' => $this->moduleId,
             'moduleName' => 'Files',
-            'modelName' => File::MODEL_NAME,
+            'modelName' => $modelClass::MODEL_NAME,
             'controller' => 'backend',
         ]);
     }

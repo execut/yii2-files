@@ -11,6 +11,7 @@ use execut\yii\migration\Migration;
 class Attacher extends \execut\yii\migration\Attacher
 {
     public $tables = [];
+    public $moduleId = null;
 
     protected function getVariations () {
         return ['tables'];
@@ -28,5 +29,22 @@ class Attacher extends \execut\yii\migration\Attacher
                 $i->table($table)->addForeignColumn('files_files');
             }
         }
+
+        $modelClass = \yii::$app->getModule($this->moduleId)->modelClass;
+        $tableName = $modelClass::tableName();
+        $tableSchema = $this->db->getTableSchema($tableName);
+        if ($tableSchema) {
+            return;
+        }
+
+        $i->table($tableName)
+            ->create($this->defaultColumns([
+                'name' => $this->string()->notNull(),
+                'extension' => $this->string()->notNull(),
+                'mime_type' => $this->string()->notNull(),
+                'data' => 'bytea NOT NULL',
+                'file_md5' => $this->string(64)->notNull(),
+                'visible' => $this->boolean()->notNull()->defaultValue(true)
+            ]))->createIndex('file_md5', true);
     }
 }

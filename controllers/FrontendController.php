@@ -22,10 +22,10 @@ class FrontendController extends Controller
                 'class' => Action::class,
                 'adapter' => [
                     'class' => File::className(),
-                    'dataAttribute' => \yii::$app->getModule('files')->getColumnName('data'),
-                    'mimeTypeAttribute' => \yii::$app->getModule('files')->getColumnName('mime_type'),
-                    'extensionAttribute' => \yii::$app->getModule('files')->getColumnName('extension'),
-                    'modelClass' => \execut\files\models\File::class,
+                    'dataAttribute' => $this->module->getColumnName('data'),
+                    'mimeTypeAttribute' => $this->module->getColumnName('mime_type'),
+                    'extensionAttribute' => $this->module->getColumnName('extension'),
+                    'modelClass' => $this->module->modelClass,
                 ],
             ],
         ];
