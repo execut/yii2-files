@@ -99,7 +99,7 @@ class FileBase extends ActiveRecord
 //                        ],
                         'actions' => [
                             'column' => [
-                                'controller' => '/files/backend',
+                                'controller' => '/' . static::getModule()->id . '/backend',
                             ]
                         ],
                     ])
