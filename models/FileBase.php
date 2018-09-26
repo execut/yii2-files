@@ -138,7 +138,7 @@ class FileBase extends ActiveRecord
     public function getUrl($dataAttribute) {
         $extensionAttribute = static::getModule()->getColumnName('extension');
         return Url::to([
-            static::getModuleId() . '/frontend/index',
+            '/' . static::getModuleId() . '/frontend/index',
             'id' => $this->id,
             'extension' => strtolower($this->$extensionAttribute),
             'dataAttribute' => $dataAttribute,
