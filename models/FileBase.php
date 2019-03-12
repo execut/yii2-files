@@ -11,6 +11,7 @@ namespace execut\files\models;
 
 use execut\crudFields\Behavior;
 use execut\crudFields\BehaviorStub;
+use execut\crudFields\fields\Field;
 use execut\crudFields\fields\File as FileField;
 use execut\crudFields\ModelsHelperTrait;
 use execut\files\models\queries\FileQuery;
@@ -118,7 +119,7 @@ class FileBase extends ActiveRecord
     public function rules()
     {
         return ArrayHelper::merge($this->getBehavior('fields')->rules(), [
-            ['file_md5', 'unique', 'targetClass' => static::class],
+            ['file_md5', 'unique', 'targetClass' => static::class, 'on' => [Field::SCENARIO_FORM,'default']],
         ]);
     }
 
