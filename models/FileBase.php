@@ -66,7 +66,7 @@ class FileBase extends ActiveRecord
         return ArrayHelper::merge(
             parent::behaviors(),
             [
-                'seoKeywords' => [
+                Behavior::RELATIONS_SAVER_KEY => [
                     'class' => SaveRelationsBehavior::class,
                     'relations' => [
                         'seoKeywords'
@@ -144,5 +144,9 @@ class FileBase extends ActiveRecord
             'extension' => strtolower($this->$extensionAttribute),
             'dataAttribute' => $dataAttribute,
         ]);
+    }
+
+    public function getTitle() {
+        return $this->name;
     }
 }
