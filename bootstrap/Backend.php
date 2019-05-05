@@ -14,6 +14,7 @@ use yii\i18n\PhpMessageSource;
 
 class Backend extends Common
 {
+    public $isBootstrapI18n = true;
     public function getDefaultDepends()
     {
         return ArrayHelper::merge(parent::getDefaultDepends(), [
@@ -32,17 +33,6 @@ class Backend extends Common
     {
         parent::bootstrap($app);
         $this->bootstrapNavigation($app);
-        $this->initI18n();
-    }
-
-    public function initI18n() {
-        \yii::$app->i18n->translations['execut/files'] = [
-            'class' => PhpMessageSource::class,
-            'basePath' => '@vendor/execut/yii2-files/messages',
-            'fileMap' => [
-                'execut/files' => 'files.php',
-            ],
-        ];
     }
 
     /**
@@ -50,7 +40,8 @@ class Backend extends Common
      */
     protected function bootstrapNavigation($app)
     {
-        if ($app->user->isGuest || !$app->user->can($app->getModule($this->moduleId)->adminRole)) {
+        $module = $app->getModule($this->moduleId);
+        if (!(!$app->user->isGuest && $module->adminRole === '@') && !$app->user->can($module->adminRole)) {
             return;
         }
 

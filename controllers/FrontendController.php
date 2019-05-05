@@ -17,7 +17,7 @@ class FrontendController extends Controller
             'index' => [
                 'class' => Action::class,
                 'adapter' => [
-                    'class' => File::className(),
+                    'class' => File::class,
                     'dataAttribute' => $this->module->getColumnName('data'),
                     'mimeTypeAttribute' => $this->module->getColumnName('mime_type'),
                     'extensionAttribute' => $this->module->getColumnName('extension'),

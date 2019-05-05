@@ -19,6 +19,7 @@ class FilesPlugin extends \execut\crudFields\Plugin
                 'class' => HasManySelect2::class,
                 'attribute' => 'filesFiles',
                 'relation' => 'filesFiles',
+                'module' => 'files',
                 'url' => [
                     '/files/backend'
                 ],
@@ -57,5 +58,10 @@ class FilesPlugin extends \execut\crudFields\Plugin
         $tableName = $this->getOwnerTableName();
 
         return Inflector::singularize($tableName) . '_id';
+    }
+
+    public function attach()
+    {
+
     }
 }

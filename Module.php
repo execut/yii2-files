@@ -14,7 +14,7 @@ class Module extends \yii\base\Module implements Plugin
     public $columns = [];
     public $adminRole = '@';
     public $modelClass = models\File::class;
-    protected const DEFAULT_COLUMNS = [
+    const DEFAULT_COLUMNS = [
         'extension' => 'extension',
         'name' => 'name',
         'data' => 'data',
@@ -39,10 +39,6 @@ class Module extends \yii\base\Module implements Plugin
         }
 
         return $pluginsResults;
-    }
-
-    public function getAttachedModels() {
-        return $this->getPluginsResults(__FUNCTION__);
     }
 
     public function getDataColumns() {

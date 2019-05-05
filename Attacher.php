@@ -42,7 +42,7 @@ class Attacher extends \execut\yii\migration\Attacher
                 'name' => $this->string()->notNull(),
                 'extension' => $this->string()->notNull(),
                 'mime_type' => $this->string()->notNull(),
-                'data' => 'bytea NOT NULL',
+                'data' => $this->binary()->notNull(),
                 'file_md5' => $this->string(64)->notNull(),
                 'visible' => $this->boolean()->notNull()->defaultValue(true)
             ]))->createIndex('file_md5', true);

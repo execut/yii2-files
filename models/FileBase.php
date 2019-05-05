@@ -106,7 +106,7 @@ class FileBase extends ActiveRecord
                     ])
                 ],
                 [
-                    'class' => TimestampBehavior::className(),
+                    'class' => TimestampBehavior::class,
                     'createdAtAttribute' => 'created',
                     'updatedAtAttribute' => 'updated',
                     'value' => new Expression('NOW()'),

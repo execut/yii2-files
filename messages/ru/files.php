@@ -10,4 +10,5 @@ return [
     'Created' => 'Создано',
     'Updated' => 'Обновлено',
     'FilesFiles' => 'Файлы',
+    'Files File' => 'Файл',
 ];
