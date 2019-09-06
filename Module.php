@@ -20,6 +20,7 @@ class Module extends \yii\base\Module implements Plugin
         'data' => 'data',
         'mime_type' => 'mime_type',
         'file_md5' => 'file_md5',
+        'format' => 'format',
     ];
     public function behaviors()
     {
@@ -60,5 +61,14 @@ class Module extends \yii\base\Module implements Plugin
     public function getColumnsNames(): array
     {
         return ArrayHelper::merge(self::DEFAULT_COLUMNS, $this->columns);
+    }
+
+    public function getFormats($file = null) {
+        $pluginsResults = $this->getPluginsResults(__FUNCTION__);
+        if (!$pluginsResults) {
+            return [];
+        }
+
+        return $pluginsResults;
     }
 }

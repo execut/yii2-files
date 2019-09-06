@@ -3,7 +3,6 @@
  */
 
 namespace execut\files\plugin;
-
 class Alias implements \execut\files\Plugin
 {
     public function getFileFieldsPlugins() {
@@ -16,6 +15,9 @@ class Alias implements \execut\files\Plugin
 
     public function getDataColumns()
     {
+        return [];
+    }
+    public function getFormats($file = null) {
         return [];
     }
 }

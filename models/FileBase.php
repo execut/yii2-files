@@ -35,21 +35,27 @@ class FileBase extends ActiveRecord
 
     public static function find()
     {
-        $names = self::getDb()->getTableSchema(static::tableName())->getColumnNames();
-        $dataColums = static::getDataColumns();
-        foreach ($names as $key => $column) {
-            if (in_array($column, $dataColums)) {
-                unset($names[$key]);
-            }
-        }
+        return (new FileQuery(static::class));
+    }
 
-        $names = array_filter($names);
-
-        return (new FileQuery(static::class))->select($names);
+    public function search()
+    {
+        $dp = $this->getBehavior('fields')->search();
+        $dp->query->withoutData();
+        return $dp;
     }
 
     public static function getDataColumns() {
-        $columns = ArrayHelper::merge(['data'], static::getModule()->getDataColumns());
+        $dataColumnsSource = static::getModule()->getDataColumns();
+        $dataColumns = $dataColumnsSource;
+        $formats = static::getModule()->getFormats();
+        foreach ($formats as $format => $params) {
+            foreach ($dataColumnsSource as $column) {
+                $dataColumns[] = self::getDataAttributeNameForFormat($column, $format);
+            }
+        }
+
+        $columns = ArrayHelper::merge(['data'], $dataColumns);
         return $columns;
     }
 
@@ -66,12 +72,12 @@ class FileBase extends ActiveRecord
         return ArrayHelper::merge(
             parent::behaviors(),
             [
-                Behavior::RELATIONS_SAVER_KEY => [
-                    'class' => SaveRelationsBehavior::class,
-                    'relations' => [
-                        'seoKeywords'
-                    ],
-                ],
+//                Behavior::RELATIONS_SAVER_KEY => [
+//                    'class' => SaveRelationsBehavior::class,
+//                    'relations' => [
+//                        'seoKeywords'
+//                    ],
+//                ],
                 'fields' => [
                     'class' => Behavior::class,
                     'plugins' => static::getModule()->getFileFieldsPlugins(),
@@ -136,17 +142,37 @@ class FileBase extends ActiveRecord
         return $this->alias . '.' . $this->extension . ' (' . $this->name . ')';
     }
 
-    public function getUrl($dataAttribute) {
+    public function getUrl($dataAttribute, $format = null) {
         $extensionAttribute = static::getModule()->getColumnName('extension');
         return Url::to([
             '/' . static::getModuleId() . '/frontend/index',
             'id' => $this->id,
-            'extension' => strtolower($this->$extensionAttribute),
-            'dataAttribute' => $dataAttribute,
+            'extension' => $format ? $format : strtolower($this->$extensionAttribute),
+            'dataAttribute' => self::getDataAttributeNameForFormat($dataAttribute, $format),
         ]);
     }
 
     public function getTitle() {
         return $this->name;
+    }
+
+    public static function getDataAttributeNameForFormat($attribute, $format) {
+        $formats = static::getModule()->getFormats();
+        if (!isset($formats[$format])) {
+            return $attribute;
+        }
+        return $attribute . '_' . $format;
+    }
+
+
+    public function getMimeTypeOfDataAttribute($dataAttribute) {
+        $formats = static::getModule()->getFormats();
+        $attributeParts = explode('_', $dataAttribute);
+        $formatAttribute = $attributeParts[count($attributeParts) - 1];
+        foreach ($formats as $format => $params) {
+            if ($format === $formatAttribute) {
+                return $params['mimeType'];
+            }
+        }
     }
 }

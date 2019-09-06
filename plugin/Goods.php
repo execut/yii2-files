@@ -16,4 +16,8 @@ class Goods implements Plugin {
     public function getDataColumns() {
         return [];
     }
+
+    public function getFormats($file = null) {
+        return FormatConverter::STANDARD_FORMATS;
+    }
 }

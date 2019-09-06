@@ -19,8 +19,14 @@ class FrontendController extends Controller
                 'adapter' => [
                     'class' => File::class,
                     'dataAttribute' => $this->module->getColumnName('data'),
+                    'mimeType' => function ($file, $dataAttribute) {
+                        if ($dataAttribute !== $this->module->getColumnName('data')) {
+                            return $file->getMimeTypeOfDataAttribute($dataAttribute);
+                        }
+                    },
                     'mimeTypeAttribute' => $this->module->getColumnName('mime_type'),
                     'extensionAttribute' => $this->module->getColumnName('extension'),
+                    'extensionIsRequired' => false,
                     'modelClass' => $this->module->modelClass,
                 ],
             ],

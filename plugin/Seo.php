@@ -25,4 +25,7 @@ class Seo implements Plugin
     {
         return [];
     }
+    public function getFormats($file = null) {
+        return [];
+    }
 }

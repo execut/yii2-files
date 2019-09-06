@@ -16,4 +16,7 @@ class Pages implements Plugin
     {
         return [];
     }
+    public function getFormats($file = null) {
+        return [];
+    }
 }

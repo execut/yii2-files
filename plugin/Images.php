@@ -22,4 +22,7 @@ class Images implements Plugin
     {
         return array_keys(\yii::$app->getModule('images')->getSizes());
     }
+    public function getFormats($file = null) {
+        return [];
+    }
 }
