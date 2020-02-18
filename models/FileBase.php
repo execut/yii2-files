@@ -69,6 +69,8 @@ class FileBase extends ActiveRecord
 
     public function behaviors()
     {
+        $module = static::getModule();
+        $fileFieldsPlugins = $module->getFileFieldsPlugins();
         return ArrayHelper::merge(
             parent::behaviors(),
             [
@@ -80,21 +82,21 @@ class FileBase extends ActiveRecord
 //                ],
                 'fields' => [
                     'class' => Behavior::class,
-                    'plugins' => static::getModule()->getFileFieldsPlugins(),
+                    'plugins' => $fileFieldsPlugins,
                     'module' => 'files',
                     'fields' => $this->getStandardFields(['visible'], [
-                        static::getModule()->getColumnName('name') => [
+                        $module->getColumnName('name') => [
                             'displayOnly' => true,
                             'required' => false,
                         ],
-                        static::getModule()->getColumnName('data') => [
+                        $module->getColumnName('data') => [
                             'class' => FileField::class,
                             'required' => true,
-                            'fileNameAttribute' => static::getModule()->getColumnName('name'),
-                            'fileExtensionAttribute' => static::getModule()->getColumnName('extension'),
-                            'fileMimeTypeAttribute' => static::getModule()->getColumnName('mime_type'),
-                            'dataAttribute' => static::getModule()->getColumnName('data'),
-                            'md5Attribute' => static::getModule()->getColumnName('file_md5'),
+                            'fileNameAttribute' => $module->getColumnName('name'),
+                            'fileExtensionAttribute' => $module->getColumnName('extension'),
+                            'fileMimeTypeAttribute' => $module->getColumnName('mime_type'),
+                            'dataAttribute' => $module->getColumnName('data'),
+                            'md5Attribute' => $module->getColumnName('file_md5'),
                         ],
 //                        [
 //                            'class' => HasOneSelect2::class,
@@ -106,7 +108,7 @@ class FileBase extends ActiveRecord
 //                        ],
                         'actions' => [
                             'column' => [
-                                'controller' => '/' . static::getModule()->id . '/backend',
+                                'controller' => '/' . $module->id . '/backend',
                             ]
                         ],
                     ])
