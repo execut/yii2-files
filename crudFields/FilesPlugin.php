@@ -62,7 +62,5 @@ class FilesPlugin extends \execut\crudFields\Plugin
 
     public function attach()
     {
-        echo 1;
-        exit;
     }
 }
