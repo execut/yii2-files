@@ -5,6 +5,7 @@
 namespace execut\files\plugin;
 
 
+use execut\files\FormatConverter;
 use execut\files\Plugin;
 use execut\goods\models\Article;
 
