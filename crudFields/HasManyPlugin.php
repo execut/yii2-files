@@ -39,7 +39,7 @@ class HasManyPlugin extends \execut\crudFields\Plugin
 //                    'isAjaxCrud' => true,
                     'toolbar' => '',
                     'pjax' => true,
-                    'addButtonUrl' => ['/files/backend/update', 'File[' . $this->attribute . ']' => $this->owner->owner->id],
+                    'addButtonUrl' => ['/files/backend/update', 'File[' . $this->attribute . ']' => $this->owner->id],
                     'updateUrl' => ['/files/backend/update'],
                     'uniqueId' => '/files/backend',
                     'tableOptions' => [
