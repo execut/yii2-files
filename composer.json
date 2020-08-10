@@ -3,7 +3,7 @@
   "description": "Yii2 eXeCUT files",
   "keywords": ["yii2", "files"],
   "homepage": "https://github.com/execut/yii2-files",
-  "type": "library",
+  "type": "yii2-extension",
   "license": "Apache-2.0",
   "support": {
     "issues": "https://github.com/execut/yii2-files/issues?state=open",
