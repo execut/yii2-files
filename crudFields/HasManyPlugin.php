@@ -33,7 +33,7 @@ class HasManyPlugin extends \execut\crudFields\Plugin
                 'column' => [
                     'filter' => false,
                 ],
-                'gridOptions' => [
+                'fieldGrid' => new HasManyMultipleInput\Grid\Field([
                     'class' => GridView::class,
                     'id' => 'files',
 //                    'isAjaxCrud' => true,
@@ -53,7 +53,7 @@ class HasManyPlugin extends \execut\crudFields\Plugin
 
                         return $formModel;
                     },
-                ]
+                ])
             ],
         ];
     }
