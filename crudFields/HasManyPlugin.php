@@ -33,7 +33,7 @@ class HasManyPlugin extends \execut\crudFields\Plugin
                 'column' => [
                     'filter' => false,
                 ],
-                'fieldGrid' => new HasManyMultipleInput\Grid\Field([
+                'fieldGrid' => new HasManyMultipleInput\Grid\Field\DynaGrid([
                     'class' => GridView::class,
                     'id' => 'files',
 //                    'isAjaxCrud' => true,
