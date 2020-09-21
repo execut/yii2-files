@@ -42,9 +42,6 @@ class HasManyPlugin extends \execut\crudFields\Plugin
                     'addButtonUrl' => ['/files/backend/update', 'File[' . $this->attribute . ']' => $this->owner->id],
                     'updateUrl' => ['/files/backend/update'],
                     'uniqueId' => '/files/backend',
-                    'tableOptions' => [
-                        'style' => 'table-layout: fixed;',
-                    ],
                     'formModel' => function () {
                         $class = $this->modelClass;
                         $formModel = new $class();
