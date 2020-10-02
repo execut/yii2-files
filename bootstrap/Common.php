@@ -11,6 +11,7 @@ use execut\yii\Bootstrap;
 
 class Common extends Bootstrap
 {
+    protected $isBootstrapI18n = true;
     public $moduleId = 'files';
 
     public function getDefaultDepends()
@@ -22,10 +23,5 @@ class Common extends Bootstrap
                 ],
             ],
         ];
-    }
-
-    public function bootstrap($app)
-    {
-        parent::bootstrap($app);
     }
 }
