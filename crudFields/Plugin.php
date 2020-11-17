@@ -9,7 +9,8 @@ use execut\files\models\File;
 
 class Plugin extends AttachedPlugin
 {
-    public function getFields() {
+    public function getFields()
+    {
         return [
             [
                 'class' => HasOneSelect2::class,
