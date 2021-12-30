@@ -11,4 +11,5 @@ return [
     'Updated' => 'Обновлено',
     'FilesFiles' => 'Файлы',
     'Files File' => 'Файл',
+    'Ordering' => 'Очередность отображения',
 ];
