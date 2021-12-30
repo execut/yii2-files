@@ -13,6 +13,7 @@ use execut\crudFields\Behavior;
 use execut\crudFields\BehaviorStub;
 use execut\crudFields\fields\Field;
 use execut\crudFields\fields\File as FileField;
+use execut\crudFields\fields\NumberField;
 use execut\crudFields\ModelsHelperTrait;
 use execut\files\models\queries\FileQuery;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
@@ -97,6 +98,10 @@ class FileBase extends ActiveRecord
                             'fileMimeTypeAttribute' => $module->getColumnName('mime_type'),
                             'dataAttribute' => $module->getColumnName('data'),
                             'md5Attribute' => $module->getColumnName('file_md5'),
+                        ],
+                        'ordering' => [
+                            'class' => NumberField::class,
+                            'attribute' => 'ordering',
                         ],
 //                        [
 //                            'class' => HasOneSelect2::class,

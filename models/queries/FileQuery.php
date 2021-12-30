@@ -22,4 +22,9 @@ class FileQuery extends ActiveQuery
 
         return $this->select($select);
     }
+
+    public function orderByOrderingAndCreated()
+    {
+        return $this->orderBy('ordering ASC, created ASC');
+    }
 }

@@ -38,6 +38,7 @@ class BackendController extends Controller
             'moduleName' => 'Files',
             'modelName' => $modelClass::MODEL_NAME,
         ]);
+        ini_set('max_execution_time', 600);
         return ArrayHelper::merge($crud->actions(), [
             'update' => [
                 'adapter' => [
